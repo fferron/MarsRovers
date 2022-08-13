@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import axios from 'axios';
 import Create from './rover/Create';
 
@@ -7,8 +6,8 @@ interface IState {
     rovers: any[];
 }
 
-export default class Home extends React.Component<RouteComponentProps<any>, IState> {
-    constructor(props: RouteComponentProps) {
+export default class Home extends React.Component<any, IState> {
+    constructor(props: IState) {
         super(props); 
         this.state = { 
             rovers: []
@@ -25,7 +24,7 @@ export default class Home extends React.Component<RouteComponentProps<any>, ISta
         axios.delete(`http://localhost:5000/rovers/${id}`).then(data => {
             const index = this.state.rovers.findIndex(rover => rover.id === id);
             this.state.rovers.splice(index, 1);
-            this.props.history.push('/');
+            this.setState({ rovers: this.state.rovers });
         })
     }
 

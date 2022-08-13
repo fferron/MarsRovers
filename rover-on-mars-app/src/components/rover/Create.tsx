@@ -1,5 +1,4 @@
 import React from 'react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as engine from '../../engine/engine';
 import * as commonEnum from '../../engine/commonEnum';
@@ -21,9 +20,10 @@ export interface IFormState {
     errors: [];
 }
 
-class Create extends React.Component<RouteComponentProps<any>, IFormState> {
-    constructor(props: RouteComponentProps) {
+class Create extends React.Component<any, IFormState> {
+    constructor(props: IFormState) {
         super(props);
+        
         this.state = {
             name: '',
             actual_position: '0 0',  
@@ -56,11 +56,12 @@ class Create extends React.Component<RouteComponentProps<any>, IFormState> {
 
             axios.post(`http://localhost:5000/rovers`, formData).then(data => {
                 this.setState({ submitSuccess: false });
+                this.setState({ props: this.state.rovers });
             })
 
         } else 
         {
-            alert(this.state.errors.find(er => er !== undefined));    
+            //alert(this.state.errors.find(er => er !== undefined));    
         }
     }
 
@@ -132,4 +133,4 @@ class Create extends React.Component<RouteComponentProps<any>, IFormState> {
     }
 }
 
-export default withRouter(Create)
+export default Create
