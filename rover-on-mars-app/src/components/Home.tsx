@@ -51,7 +51,7 @@ export default class Home extends React.Component<RouteComponentProps<any>, ISta
                             <thead className="thead-light">
                                 <tr>
                                     <th scope="col">Rover's Name</th>
-                                    <th scope="col">Actual Position</th>
+                                    <th scope="col">Final Position</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
