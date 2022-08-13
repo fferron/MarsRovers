@@ -1,19 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import './App.css';
-import { Switch, Route, withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import Home from './components/Home';
 
-class App extends React.Component<RouteComponentProps<any>> {
+class App extends React.Component {
+  constructor(props: any){
+    super(props);
+   
+  }
+
 
   public render() {
     return (
       <div>
-        <Switch>
-          <Route path={'/'} exact component={Home} />
-        </Switch>
+        <Home any />
       </div>
     );
   }
 }
 
-export default withRouter(App);
+export default App;
