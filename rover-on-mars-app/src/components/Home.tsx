@@ -9,6 +9,7 @@ interface IState {
 export default class Home extends React.Component<any, IState> {
     constructor(props: IState) {
         super(props); 
+
         this.state = { 
             rovers: []
         };  
@@ -28,6 +29,14 @@ export default class Home extends React.Component<any, IState> {
         })
     }
 
+    private updateFromChild(){
+        let roverList = [];
+
+        axios.get(`http://localhost:5000/rovers`).then(data => {
+            roverList = data.data
+        });
+    }
+
     public render() {
         const rovers = this.state.rovers;
         return (
@@ -42,7 +51,7 @@ export default class Home extends React.Component<any, IState> {
                 <h4> Setup and Launch Rover </h4>
 
                     <div className='row'>
-                        <Create  />
+                        <Create updateFromChild={this.updateFromChild()} />
                     </div>
 
                     <div className="row">

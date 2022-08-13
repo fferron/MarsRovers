@@ -9,6 +9,10 @@ export interface IRover {
     actual_direction: string,
 }
 
+export interface IError {
+    Message: string
+}
+
 export interface IFormState {
     [key: string]: any;
     rovers: IRover[];
@@ -17,10 +21,10 @@ export interface IFormState {
     plateau_dimension: string;
     disabled: boolean;
     plateau: [];
-    errors: [];
+    errors: IError[];
 }
 
-class Create extends React.Component<any, IFormState> {
+export class Create extends React.Component<any, IFormState> {
     constructor(props: IFormState) {
         super(props);
         
@@ -56,8 +60,11 @@ class Create extends React.Component<any, IFormState> {
 
             axios.post(`http://localhost:5000/rovers`, formData).then(data => {
                 this.setState({ submitSuccess: false });
-                this.setState({ props: this.state.rovers });
-            })
+            });
+
+            window.location.reload();
+            
+            this.props.updateFromChild();
 
         } else 
         {
