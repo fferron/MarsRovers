@@ -93,7 +93,7 @@ export class Create extends React.Component<any, IFormState> {
             
         return (
             <div>
-                <div className={"col-md-12 form-wrapper"}>
+                {/* <div className={"col-md-12 form-wrapper"}>
 
                     {submitSuccess && alert("Rover was launched successfully!")}
 
@@ -134,7 +134,7 @@ export class Create extends React.Component<any, IFormState> {
                             }
                         </div>
                     </form>
-                </div>
+                </div> */}
             </div>
         )
     }
