@@ -13,6 +13,13 @@
       "movement": "LMLMLMLMM",
       "plateau_dimension": "5 5",
       "id": 2
+    },
+    {
+      "name": "Rover 3",
+      "actual_position": "1 3 N",
+      "movement": "LMLMLMLMM",
+      "plateau_dimension": "5 5",
+      "id": 3
     }
   ]
 }
