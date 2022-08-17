@@ -50,6 +50,7 @@ export default class Home extends React.Component<any, IFormState> {
 
         if(this.state.errors.length == 0){
 
+            
             const formData = {
                 name: this.state.name,
                 actual_position: this.state.actual_position,
@@ -61,11 +62,13 @@ export default class Home extends React.Component<any, IFormState> {
 
             axios.post(`http://localhost:5000/rovers`, formData).then(data => {
                 this.setState({ submitSuccess: false });
+
+                this.refreshGrid();
             });
 
             //window.location.reload();
-            this.setState({ name: '', actual_position: '', movement: '' });
-            
+            //this.setState({ values: [formData, { name: "", actual_position: "" }] });
+
 
         } else 
         {
@@ -80,6 +83,11 @@ export default class Home extends React.Component<any, IFormState> {
         });  
     }
 
+    private handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        this.setState({name: e.currentTarget.value});
+     }
+
     private savePlateau () {
         this.setState( { disabled: !this.state.disabled } );
     }
@@ -90,9 +98,7 @@ export default class Home extends React.Component<any, IFormState> {
     }
 
     public componentDidMount(): void {
-        axios.get(`http://localhost:5000/rovers`).then(data => {
-            this.setState({ rovers: data.data })
-        })
+        this.refreshGrid();
     }
 
     private bringBackHome(id: number) {
@@ -100,6 +106,12 @@ export default class Home extends React.Component<any, IFormState> {
             const index = this.state.rovers.findIndex(rover => rover.id === id);
             this.state.rovers.splice(index, 1);
             this.setState({ rovers: this.state.rovers });
+        })
+    }
+
+    private refreshGrid(){
+        axios.get(`http://localhost:5000/rovers`).then(data => {
+            this.setState({ rovers: data.data })
         })
     }
 
@@ -129,7 +141,7 @@ export default class Home extends React.Component<any, IFormState> {
                                             <label htmlFor="plateau_dimension"> Plateau's Dimension </label>
                                             
                                             <div className='input-group'>
-                                                <input type="text" id="plateau_dimension" onChange={(e) => this.handleInputChanges(e)} onBlur={this.savePlateau.bind(this)} value={this.state.plateau_dimension} name="plateau_dimension" required={true} className="form-control" disabled={this.state.disabled} placeholder="Enter plateau value. e.g.: 4 4" />
+                                                <input type="text" id="plateau_dimension" onChange={(e) => this.handleInputChanges(e)} onBlur={this.savePlateau.bind(this)} name="plateau_dimension" required={true} className="form-control" disabled={this.state.disabled} placeholder="Enter plateau value. e.g.: 4 4" />
                                                 <div className="input-group-append pull-right">
                                                     <button type="button" className="btn btn-outline-primary" name="reset_btn" id="reset_btn" onClick={this.resetPlateau.bind(this)}>Reset</button>
                                                 </div>
@@ -138,7 +150,7 @@ export default class Home extends React.Component<any, IFormState> {
 
                                         <div className="form-group col-md-12">
                                             <label htmlFor="name"> Name </label>
-                                            <input type="text" id="name" onChange={(e) => this.handleInputChanges(e)} name="name" className="form-control" placeholder="Enter name. e.g.: Rover 1" />
+                                            <input type="text" id="name"  onChange={this.handleNameChange} name="name" className="form-control" placeholder="Enter name. e.g.: Rover 1" />
                                         </div>
 
                                         <div className="form-group col-md-12">
