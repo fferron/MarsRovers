@@ -31,7 +31,7 @@ export default class Home extends React.Component<any, IFormState> {
 
         this.state = {
             name: '',
-            actual_position: '0 0',  
+            actual_position: '',  
             actual_direction: commonEnum.DirectionEnum.North,
             movement: '',
             rovers: [],
@@ -50,20 +50,6 @@ export default class Home extends React.Component<any, IFormState> {
 
         if(this.state.errors.length == 0){
 
-            const {
-                name,
-                actual_position,
-                movement,
-                plateau_dimension
-              } = this.state
-          
-            // const formData = {
-            //     name: this.state.name,
-            //     actual_position: this.state.actual_position,
-            //     movement: this.state.movement,
-            //     plateau_dimension: this.state.plateau_dimension
-            // }
-
             this.setState({ submitSuccess: true });
 
             axios.post(`http://localhost:5000/rovers`, {
@@ -74,15 +60,10 @@ export default class Home extends React.Component<any, IFormState> {
             }).then(data => {
                 this.setState({ submitSuccess: false });
 
-                this.setState({ name: '' });
+                this.setState({ name: '', actual_position: '', movement: '' });
 
                 this.refreshGrid();
             });
-
-            //window.location.reload();
-            //this.setState({ values: [formData, { name: "", actual_position: "" }] });
-
-
         } else 
         {
             //alert(this.state.errors.find(er => er !== undefined));    
@@ -95,11 +76,6 @@ export default class Home extends React.Component<any, IFormState> {
             [e.currentTarget.name]: e.currentTarget.value,
         });  
     }
-
-    private handleNameChange = (e: React.FormEvent<HTMLInputElement>) => {
-        e.preventDefault();
-        this.setState({name: e.currentTarget.value});
-     }
 
     private savePlateau () {
         this.setState( { disabled: !this.state.disabled } );
@@ -163,17 +139,17 @@ export default class Home extends React.Component<any, IFormState> {
 
                                         <div className="form-group col-md-12">
                                             <label htmlFor="name"> Name </label>
-                                            <input type="text" id="name" value={this.state.name} onChange={this.handleNameChange} name="name" className="form-control" placeholder="Enter name. e.g.: Rover 1" />
+                                            <input type="text" id="name" value={this.state.name} onChange={(e) => this.handleInputChanges(e)} name="name" className="form-control" placeholder="Enter name. e.g.: Rover 1" />
                                         </div>
 
                                         <div className="form-group col-md-12">
                                             <label htmlFor="actual_position"> Actual Position </label>
-                                            <input type="text" id="actual_position" onChange={(e) => this.handleInputChanges(e)} name="actual_position" className="form-control" placeholder="Enter position. e.g.: 0 0 N" />
+                                            <input type="text" id="actual_position" value={this.state.actual_position} onChange={(e) => this.handleInputChanges(e)} name="actual_position" className="form-control" placeholder="Enter position. e.g.: 0 0 N" />
                                         </div>
 
                                         <div className="form-group col-md-12">
                                             <label htmlFor="movement"> Movements </label>
-                                            <input type="text" id="movement" onChange={(e) => this.handleInputChanges(e)} name="movement" className="form-control" placeholder="Enter movements. e.g.: RMMLMM" />
+                                            <input type="text" id="movement" value={this.state.movement} onChange={(e) => this.handleInputChanges(e)} name="movement" className="form-control" placeholder="Enter movements. e.g.: RMMLMM" />
                                         </div>
 
                                         <div className="form-group col-md-12 pull-right">
