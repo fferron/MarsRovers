@@ -46,7 +46,7 @@ export default class Home extends React.Component<any, IFormState> {
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
-        engine.ValidateMission(this.state); 
+        this.state = engine.ValidateMission(this.state); 
 
         if(this.state.errors.length == 0){
 
@@ -77,13 +77,8 @@ export default class Home extends React.Component<any, IFormState> {
         });  
     }
 
-    private savePlateau () {
+    private handlePlateau () {
         this.setState( { disabled: !this.state.disabled } );
-    }
-
-    private resetPlateau () {
-        this.setState({ plateau_dimension: '' })
-        this.setState( { disabled: !this.state.disabled } )
     }
 
     public componentDidMount(): void {
@@ -130,9 +125,9 @@ export default class Home extends React.Component<any, IFormState> {
                                             <label htmlFor="plateau_dimension"> Plateau's Dimension </label>
                                             
                                             <div className='input-group'>
-                                                <input type="text" id="plateau_dimension" onChange={(e) => this.handleInputChanges(e)} onBlur={this.savePlateau.bind(this)} name="plateau_dimension" required={true} className="form-control" disabled={this.state.disabled} placeholder="Enter plateau value. e.g.: 4 4" />
+                                                <input type="text" id="plateau_dimension" onChange={(e) => this.handleInputChanges(e)} onBlur={this.handlePlateau.bind(this)} name="plateau_dimension" required={true} className="form-control" disabled={this.state.disabled} placeholder="Enter plateau value. e.g.: 4 4" />
                                                 <div className="input-group-append pull-right">
-                                                    <button type="button" className="btn btn-outline-primary" name="reset_btn" id="reset_btn" onClick={this.resetPlateau.bind(this)}>Reset</button>
+                                                    <button type="button" className="btn btn-outline-primary" name="reset_btn" id="reset_btn" onClick={this.handlePlateau.bind(this)}>Reset</button>
                                                 </div>
                                             </div>
                                         </div>

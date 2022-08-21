@@ -23,10 +23,10 @@ function CreatePlateau(plateauValues, state)
         {
                 var lengthX = parseInt(plateauValues[0]);
                 var lengthY = parseInt(plateauValues[1]);
-                
+
                 var plateau = Array.from(
                         { length: lengthY }, (_, y) => Array.from(
-                                { length: lengthX }, (_, x) => ({ x, y })
+                                { length: lengthX }, (_, x) => ('')
                         )
                 )
 
@@ -51,15 +51,15 @@ function MoveRoverOnPlateau(state)
         
         if(inBounds(row, col, state.plateau))
         {
-                if(state.plateau[row][col] !== null && state.plateau[row][col] !== '')
+                if(state.plateau[row][col] !== null && state.plateau[row][col] === '')
                 {
                         state.plateau[row][col] = state.name;
                 } 
                 else 
                 {
-                        console.log('Houston, we have a problem! Movement field is incorrect. Please, send valid movements!'); 
+                        console.log(`Houston, we have a problem! We cannot send this rover to the same coordinates of the ${state.plateau[row][col]}. Please, send different movements!`); 
 
-                        state.errors.push('Houston, we have a problem! Movement field is incorrect. Please, send valid movements!'); 
+                        state.errors.push(`Houston, we have a problem! We cannot send this rover to the same coordinates of the ${state.plateau[row][col]}. Please, send different movements!`); 
 
                         return;
                 }
