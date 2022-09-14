@@ -15,6 +15,12 @@ export const ValidateMission = (state)=>{
 
         // Step 3: moves the rover on the plateau
         MoveRoverOnPlateau(state);
+
+        //fetchState(state);
+}
+
+function fetchState(state){
+        return state;
 }
 
 function CreatePlateau(plateauValues, state)

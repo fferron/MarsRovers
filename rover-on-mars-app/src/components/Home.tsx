@@ -46,7 +46,7 @@ export default class Home extends React.Component<any, IFormState> {
     private processFormSubmission = (e: React.FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
-        this.state = engine.ValidateMission(this.state); 
+        engine.ValidateMission(this.state); 
 
         if(this.state.errors.length == 0){
 
